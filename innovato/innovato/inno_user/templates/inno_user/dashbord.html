@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <title>
+        innovatobox
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'inno_user/css/header.css'%}">
+    <style type="text/css">
+        #delete
+    {
+       position:absolute;
+       right:10%;
+       top:8%;
+    }
+        #position
+        {
+            font: 1em sans-serif;
+            position: absolute;
+            right: 3%;
+            top:8%;
+        }
+        #u{
+            position: absolute;
+            margin: 5px;
+            font-weight: bolder;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        #fa{
+            font-size: 30px;
+            box-shadow: none;
+            
+        }
+        #fa:hover {
+            color:blue;
+            
+          }
+    
+         
+    </style>
+</head>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: gray;">
+          <h5 class="modal-title " id="exampleModalLabel">Delete Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="font-family:cursive;">Are You Sure? Do You Want to delete your Project...</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <a href = "/inno_user/delete_post/{{video.v_id}}/" class="float-left ml-2">
+                <input type="submit" value="Delete" class="btn btn-secondary">
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+<body style="background-color:  #fcde67">
+    <div class="header">
+        <div class="header__left">
+            <a href="/inno_user/homepage/">
+                <img class="header__logo" src="https://pbs.twimg.com/media/EvIknhZVkAMKkxz?format=png&amp;name=small" alt="">
+            </a>
+        </div>
+        {% if user.is_authenticated %}
+        {% for msg in messages %}
+            <div class="alert alert-{{ msg.tags }} alert-dismissible fade show w-25 float-left" role="alert">
+            <strong>MESSAGE :</strong> {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        <div id="delete">
+            {% if  request.user == video.v_user %}
+                <div class="" >
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                        Delete Post
+                      </button>
+                      
+                </div>
+            {% endif %}
+        </div>
+        
+        <div id="position">
+            <a href="/inno_user/homepage/" class='btn btn-primary ml-2 ' type="button">Home</a>
+        </div>
+        <div class="header__icons">
+            <!-- <p>{{ request.user.username}}</p> -->
+
+
+
+</div>
+    </div>
+
+    
+    <br>
+    <br>
+
+     <div class="card mb-5 mx-auto shadow" style="width: 60%;">
+
+        <video class="embed-responsive embed-responsive-16by9" style="height: 70vh;;" controls="controls">
+            <source src="{{ video.v_file.url }}" type="video/mp4" />
+        </video>
+
+        <div class="card-body" style= "background-color: rgb(197, 218, 240);">
+            <!-- <img src="{{i.v_image.url}}" width="10%" alt="{{i.v_title}}"> -->
+          <h5 class="card-title">{{ video.v_title }}</h5>
+          <p class="card-text">{{ video.v_desc }}.</p>
+          <!-- like code ----------------------------------------------->
+          
+
+          <!-- like part -->
+            <div>
+            <div>
+            <p>{{ l_like }} likes</p>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: gray;">
+                    <h5 class="modal-title " id="exampleModalLabel1">You Can't Like This Video</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <p style="font-family:cursive;">You have to login </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <a href = "/inno_user/" class="float-left ml-2">
+                            <input type="submit" value="Sign Up " class="btn btn-secondary">
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            {% if request.user.username == "guest_user"%}
+            <a  class="btn btn-default" data-toggle="modal" data-target="#exampleModal1">
+                <i class="far fa-thumbs-up" id="fa"></i>
+                </a>
+            {%else%}
+            {% for x in like %}
+                {% if x.l_user == request.user %}
+                    {% if video == x.l_postid %}
+                        <a href="/inno_user/unlike/{{x.l_id}}/{{video.v_id}}/" class="btn btn-outline-primary"> 
+                            <i class="fas fa-thumbs-up" id="fa"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if video not in like_user %}
+                <a href="/inno_user/like_l/{{video.v_id}}/" class="btn btn-default">
+                    <i class="far fa-thumbs-up" id="fa"></i>
+                    </a>
+            {% endif %}
+            {%endif%}
+            </div>
+          <!-- end like part -->
+
+
+          <!---------------------------------------------------------->
+          <div class="float-right" style="position: relative; bottom: 50px;;" > 
+                <!-- Button trigger modal -->      
+                <!-- Modal -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: gray;">
+                    <h5 class="modal-title " id="exampleModalLabel2">You Can't Comment This Video</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <p style="font-family:cursive;">You have to login </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <a href = "/inno_user/" class="float-left ml-2">
+                            <input type="submit" value="Sign Up " class="btn btn-secondary">
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <form action="/inno_user/cmt_upld/{{ video.v_id }}/" method="post">
+                    {% csrf_token %}
+                    
+                    
+                    <div class = "row" style=" position:relative;top: 5px;"> 
+                        <div class="form-group col-md-8">
+                            <textarea class="form-control" name="comment" placeholder="Comment" rows="1" cols="35" default="NULL"required></textarea>
+                        </div>
+                        {% if request.user.username == "guest_user"%}
+                     
+                        <div class=" form-group col-md-4">
+                            <a data-toggle="modal" data-target="#exampleModal2">
+                            <button type="submit" class="btn btn-primary" >Send</button>
+                        </a>
+                        </div>
+                       
+                        {%else%}
+                          <div class=" form-group col-md-4">
+                            <button type="submit" class="btn btn-primary" >Send</button>
+                        </div>
+                        {% endif %}
+                       
+                    </div>
+                </form> 
+             
+        
+        </div>                 
+            </div><br>
+        
+        <div class="card-footer w-100" style="height: 20vh; overflow-y: scroll;">
+        <p>Comments :)</p>                  
+            {% for j in cmt %}
+                {% if video.v_id == j.cmt_vid.v_id %}
+                    {% if request.user == j.cmt_user%}
+                    <p class="w-100"><span class="text-muted"><b>ME : </b></span>{{ j.cmt_msg }}</p>
+                    {%else%}
+                    <p class="w-100"><span class="text-muted"><b>{{ j.cmt_user }} : </b></span>{{ j.cmt_msg }}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+</div>        
+    {% else %}
+   
+	<div class="alert alert-danger alert-dismissible fade show w-25 float-left" role="alert">
+	  <strong>MESSAGE :</strong>SORRY!!! YOU ARE NOT LOGED IN
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+    {% endif %}
+</body>
+<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+</html>

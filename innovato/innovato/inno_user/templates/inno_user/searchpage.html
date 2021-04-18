@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>InnovatoBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'inno_user/css/sidebar.css'%}">
+        <link rel="stylesheet" href="{% static 'inno_user/css/header.css'%}">
+        <link rel="stylesheet" href="{% static 'inno_user/css/home.css'%}">
+
+
+</head>
+<body data-new-gr-c-s-check-loaded="14.998.0" data-gr-ext-installed="">
+    <div id="root">
+        <div class="app">
+            <div class="/">
+                <div class="header">
+                    <div class="header__left">
+                        <a href="/inno_user/homepage/">
+                            <img class="header__logo" src="https://pbs.twimg.com/media/EvIknhZVkAMKkxz?format=png&amp;name=small" alt="">
+                        </a>
+                    </div>
+                    <div class="header__input">
+                        <form action="/inno_user/searchpage/" method="post">
+                            {% csrf_token %}
+                            <!-- <input type= "hidden" name = "sname" value="{{ reqeust.user.username }}"> -->
+                              <div class="row">
+                                  <div class="col-md-10 col-12 ">
+                              <input type="text" name= "smsg" placeholder="Search"  class= "form-control" style="width:500px">
+                            </div>
+                            <div class="col-md-2 col-12">
+                              <button type="submit" class="btn btn-primary"><i class="fas fa-search "></i></button>
+                            </div>
+                              </div>
+                        </form>
+                    </div>
+                    <div class="header__icons">
+                        {% for p in p %}
+                        {% if request.user.username == p.p_name %}
+                            {% if p.p_contact == 0 %}    
+                                <a href="/inno_user/profilepage/{{p.p_id}}">
+                                    <div class="MuiAvatar-root MuiAvatar-circle header__icon">
+                                        <img alt="HimalayaDev" src="{% static 'inno_user/user.png'%}" class="MuiAvatar-img">
+                                    </div>
+                                </a>
+                            {% else %}
+                                <a href="/inno_user/profilepage/{{p.p_id}}">
+                                    <div class="MuiAvatar-root MuiAvatar-circle header__icon">
+                                        <img alt="HimalayaDev" src="{{ p.p_image.url }}" class="MuiAvatar-img">
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="home__page">
+                    <div class="UploadPage" style="border-style: solid;
+                    border-color: #349adb; height: 100vh;
+        overflow-x:scroll;        border-radius: 5px;
+        border-width: 3px;">
+        <br>
+                        <h2>Searched Video:</h2>
+<br>
+
+    {% if user.is_authenticated %}
+    {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }} alert-dismissible fade show w-25 float-left" role="alert">
+        <strong>MESSAGE :</strong> {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+	{% endfor %}
+       <br>
+    
+   `    {% if y == "yes" %}
+        <h2 class="text-muted">{{msg}}</h2>
+        {% endif %}
+       {% for l in li %}
+       <a href="/inno_user/dashbord/{{l.v_id}}/">
+            <img width="400" height= "200 "src= "{{ l.v_image.url }}" alt="{{l.v_title}}"><br>
+        </a>
+            <br><br>
+        {% endfor %}
+        
+    
+
+   
+        
+        
+        </div>
+       
+
+        
+    {% else %}
+   
+   
+	<div class="alert alert-danger alert-dismissible fade show w-25 float-left" role="alert">
+        <strong>MESSAGE :</strong>SORRY!!! YOU ARE NOT LOGED IN
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+  
+      {% endif %}
+      <div class="sidebar">
+          <a class="link" style="text-decoration:none" href="/inno_user/homepage/">
+              <div class="sidebarRow undefined">
+                  <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8.17 5.7L1 10.48V21h5v-8h4v8h5V10.25z"></path>
+                      <path d="M10 3v1.51l2 1.33L13.73 7H15v.85l2 1.34V11h2v2h-2v2h2v2h-2v4h6V3H10zm9 6h-2V7h2v2z"></path>
+                  </svg>
+                  <h2 class="sidebarRow__title">Home</h2>
+              </div>
+          </a>
+          <hr>
+          <a class="link" style="text-decoration:none" href="/inno_user/trendingpage/">
+              <div class="sidebarRow undefined">
+                  <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z">
+      
+                      </path>
+                  </svg>
+                  <h2 class="sidebarRow__title">Trending</h2>
+              </div>
+          </a>
+          <hr>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: gray;">
+                <h5 class="modal-title " id="exampleModalLabel">You Can't Post Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <p style="font-family:cursive;">You have to login </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <a href = "/inno_user/" class="float-left ml-2">
+                        <input type="submit" value="Sign Up " class="btn btn-secondary">
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% if request.user.username == "guest_user"%}
+        <a style="text-decoration:none" class="link" data-toggle="modal" data-target="#exampleModal">
+            <div class="sidebarRow undefined">
+                <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"></path>
+                </svg>
+                <h2 class="sidebarRow__title">Upload Video</h2>
+            </div>
+            </a>
+    {%else%}
+    <a style="text-decoration:none" class="link" href="/inno_user/up_video/">
+    <div class="sidebarRow undefined">
+        <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"></path>
+        </svg>
+        <h2 class="sidebarRow__title">Upload Video</h2>
+    </div>
+    </a>
+    {%endif%}
+          <hr>
+          <a class="link" style="text-decoration:none" href="/inno_user/likedvideo/">
+              <div class="sidebarRow undefined">
+                  <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 17.27l5.17 3.12c.38.23.85-.11.75-.54l-1.37-5.88 4.56-3.95c.33-.29.16-.84-.29-.88l-6.01-.51-2.35-5.54c-.17-.41-.75-.41-.92 0L9.19 8.63l-6.01.51c-.44.04-.62.59-.28.88l4.56 3.95-1.37 5.88c-.1.43.37.77.75.54L12 17.27z"></path>
+                  </svg>
+                  <h2 class="sidebarRow__title">Liked videos</h2>
+              </div>
+          </a>
+          <hr>
+          {% if request.user.username == "guest_user" %}
+          <a style="text-decoration:none" class="link" href="/inno_user/">
+              <div class="sidebarRow undefined">
+                  <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+                  </svg>
+                   <h2 class="sidebarRow__title">LogIn</h2>
+              </div>
+          </a>
+          {% else %}
+          <a style="text-decoration:none" class="link" href="/inno_user/signout/">
+
+
+          <div class="sidebarRow undefined">
+              <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+              </svg>
+              <h2 class="sidebarRow__title">Logout</h2>
+          </div>
+          </a>
+      {% endif %}
+          <hr>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+      <script>
+          {% block js %}
+          {% endblock %}
+      </script>
+          </body>
+      </html>
