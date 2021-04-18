@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'inno_user/css/sidebar.css'%}">
+        <link rel="stylesheet" href="{% static 'inno_user/css/header.css'%}">
+        <link rel="stylesheet" href="{% static 'inno_user/css/home.css'%}">
+        <link rel="stylesheet" href="{% static 'inno_user/css/profile.css'%}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>InnovatoBox</title>
+   
+</head>
+    <body data-new-gr-c-s-check-loaded="14.998.0" data-gr-ext-installed=""> 
+       
+        <div id="root">
+            <div class="app">
+                <div class="/">
+                    <div class="header">
+                        <div class="header__left">
+ 
+                            <a href="/inno_user/homepage/">
+                                <img class="header__logo" src="https://pbs.twimg.com/media/EvIknhZVkAMKkxz?format=png&amp;name=small" alt="">
+                            </a>
+                        </div>
+<div>
+    <nav class="navbar"  >
+        <a href="#home">
+            <i class="fa fa-fw fa-home">
+                
+            </i>Home</a>
+        <a href="#container-about">
+            <i class="fa fa-fw fa-user">
+
+            </i>About</a>
+        <a href="#skillheader">
+            <i class="fa fa-fw fa-xing ">
+
+            </i>Skills</a>
+        <a  href="#Portfolio">
+            <i class="fa fa-github-alt">
+
+            </i>Projects</a>
+        <a href="#contactnav">
+            <i class="fa fa-fw fa-envelope">
+
+            </i>Contact</a>
+    </nav>
+</div>
+                        {% if request.user.username == p.p_name %}
+                        <div class="header__icons">
+                            <a href="/inno_user/up_profile/{{p.p_id}}" class="btn btn-primary" >Edit Profile</a>
+                                
+                        </div>
+                        {%else%}
+                        <div class="header__icons">
+                            <a href="/inno_user/following/{{p.p_id}}/{{request.user.username}}" class="btn btn-primary" >follow</a>  
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="home__page">
+                        <div class="ProfilePage" id="home">
+                            <div >
+                                <h1 class="header-h1">Profile:</h1>
+                            </div>
+                            <hr>
+
+                            <br>
+                            <section class="container-banner">
+                                <a href="#home">
+                                    {% if request.user.username == p.p_name %}
+                                        {% if p.p_contact == 0 %}    
+                                                <div class="MuiAvatar-root MuiAvatar-circle header__icon mx-auto" style="width: 200px;height:200px">
+                                                    <img alt="HimalayaDev" src="{% static 'inno_user/user.png'%}"  class="MuiAvatar-img">
+                                                </div>
+                                            
+                                        {% else %}
+                                                <div class="MuiAvatar-root MuiAvatar-circle header__icon mx-auto" style="width: 300px;height:300px">
+                                                    <img alt="HimalayaDev" src="{{ p.p_image.url }}" class="MuiAvatar-img">
+                                                </div>
+                                            
+                                        {% endif %}
+                                    {%else%}
+                                    <div class="MuiAvatar-root MuiAvatar-circle header__icon mx-auto" style="width: 300px;height:300px">
+                                        <img alt="HimalayaDev" src="{{ p.p_image.url }}" class="MuiAvatar-img">
+                                    </div>  
+                                    {% endif %}
+                                </a>
+                                <h3 id="container-about"> Hi! I'm {{p.p_name}}</h3>
+
+                            </section>
+                            <br>
+                            <hr>  
+                            <section  id="skillheader" class="container-about">
+                                <h1>About Me:</h1>
+                                <img src="{% static '/inno_user/biopicimg.jpg/' %}" width="180" height="180" alt="abtimg">
+                                <p>{{p.p_about}}</p>
+                            </section>
+                            <br>
+                            <hr>
+                            <h1 class="skillheader" id="Portfolio">Skills:</h1>
+                            <a href="/inno_user/up_skills/{{ p.p_id }}/{{ s.sk_id }}/">
+                                {% if request.user.username == p.p_name %}
+                            <button type="button" class="btn btn-primary float-right mr-3" style="position: relative; bottom:45px;">
+                                <i class="fas fa-plus-square"></i></button>
+                                {% endif %}
+                            </a>
+                            <hr>
+                            <section  class="flex-project-container">
+                                {% if s.Python == "PY" %}
+                                    <div>
+                                        <img src="{% static '/inno_user/pythonimg.png/' %}" width="100" height="100" alt="python">
+                                    </div>
+                                {% endif %}
+
+                                {% if s.Js ==  "JS" %}
+                                <div>
+                                    <img src="{% static '/inno_user/javascriptimg2.png/' %}" width="100" height="100" alt="js">
+                                </div>
+                                {% endif %}
+
+                                {% if s.Html == "HTML" %}
+                                    <div>
+                                        <img src="{% static '/inno_user/html5logo.jpg/' %}" width="100" height="100" alt="html">
+                                    </div>
+                                {% endif %}
+
+                                {% if s.Css == "CSS" %}
+                                    <div>
+                                        <img src="{% static '/inno_user/csslogo.png/' %}" width="100" height="100" alt="css">
+                                    </div>
+                                {% endif %}
+
+                                {% if s.Wordpress == "WB" %}
+                                    <div>
+                                        <img src="{% static '/inno_user/wordpress.png/' %}" width="100" height="100" alt="wordpress">
+                                    </div>
+                                {% endif %}
+
+                                {% if s.Mongodb == "MND" %}
+                                    <div>
+                                        <img src="{% static '/inno_user/mngodbimg.png/' %}" width="100" height="100" alt="mongodb">
+                                    </div>
+                                {% endif %}
+
+                                {% if s.Database == "DataBase" %} 
+                                    <div>
+                                        <img src="{% static '/inno_user/database.jpg/' %}" width="100" height="100" alt="db">
+                                    </div>
+                                {% endif %}
+
+                            </section>
+                            <hr>
+                            <section  class="projects">
+                                <div class="row">
+                                    
+                                    <div class="col-md-3 col-12 ">
+                                        <a href="/inno_user/delete_project/" class="float-left" >
+                                            {% if request.user.username == p.p_name %}
+                                            <button type="button"class="btn btn-secondary float-right mx-auto my-5" style="position: relative; bottom:25px;">
+                                                Delete Project
+                                            </button>
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                        <div class="col-md-7 col-12 mt-2">  
+                                            <h1>Projects:</h1><hr>
+                                        </div>
+                                    
+                                    <div class="col-md-2 col-12 mt-3">
+                                         
+                                            <a href="/inno_user/portfolio/{{p.p_id}}/">
+                                                {% if request.user.username == p.p_name %}
+                                                <button type="button" class="btn btn-primary float-right mx-auto my-5" style="position: relative; bottom:45px;">
+                                                    <i class="fas fa-plus-square"></i></button>
+                                                {% endif %}
+                                            </a>
+                                                </div> 
+                                       
+                                    </div> 
+                                    
+                                
+                                        <div class="container">
+                                            
+                                            {% for port in port %}
+                                                    {% if port.port_user == request.user.username %}
+                                                    {% if p.p_name == port.port_user%}
+                                                        <a href = "{{ port.port_url }}">
+                                                            <img src="{{ port.port_img.url}}" width="250" height="250"class="rounded my-3 mx-2  ">
+                                                            
+                                                        </a>
+                                                    {% endif %}
+                                                      {%else%}
+                                                      {% if p.p_name == port.port_user%}
+                                                      <a href = "{{ port.port_url }}">
+                                                        <img src="{{ port.port_img.url}}" width="250" height="250"class="rounded my-3 mx-2  ">
+                                                        
+                                                    </a>
+                                                {% endif%}
+                                               
+                                             {% endif %}
+                                             {% endfor%}
+                                            
+                                        </div>
+                                    </section>
+                            <hr>
+                            <h1 id="contactnav" class="contact">Contact Me:</h1>
+                            <hr>
+                            <section class="container-1">
+                                <img id="contactimg" src="{% static '/inno_user/contactlogo.png/' %}" width="180" height="180" alt="contactlogo">
+                                <h3> <strong>{{ p.p_name }}</strong>
+                                </h3>
+                                
+                                <a id="mail" href="mailto: {{p.p_email}}">
+                                    
+                                    <img id="mailmelogo" src="{% static '/inno_user/mailmeimg.png/' %}" alt="mail me">Click Here To Send Mail
+                                </a>
+                                <h4>Contant Info: {{ p.p_contact}}</h4>
+                            </section>
+                        </div>
+                        <div class="sidebar">
+                            <a class="link" style="text-decoration:none" href="/inno_user/homepage/">
+                                <div class="sidebarRow undefined">
+                                    <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M8.17 5.7L1 10.48V21h5v-8h4v8h5V10.25z"></path>
+                                        <path d="M10 3v1.51l2 1.33L13.73 7H15v.85l2 1.34V11h2v2h-2v2h2v2h-2v4h6V3H10zm9 6h-2V7h2v2z"></path>
+                                    </svg>
+                                    <h2 class="sidebarRow__title">Home</h2>
+                                </div>
+                            </a>
+                            <hr>
+                            <a class="link" style="text-decoration:none" href="/inno_user/trendingpage/">
+                                <div class="sidebarRow undefined">
+                                    <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z">
+
+                                        </path>
+                                    </svg>
+                                    <h2 class="sidebarRow__title">Trending</h2>
+                                </div>
+                            </a>
+                            <hr>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: gray;">
+                                    <h5 class="modal-title " id="exampleModalLabel">You Can't Post Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <p style="font-family:cursive;">You have to login </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        <a href = "/inno_user/" class="float-left ml-2">
+                                            <input type="submit" value="Sign Up " class="btn btn-secondary">
+                                        </a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            {% if request.user.username == "guest_user"%}
+                            <a style="text-decoration:none" class="link" data-toggle="modal" data-target="#exampleModal">
+                                <div class="sidebarRow undefined">
+                                    <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"></path>
+                                    </svg>
+                                    <h2 class="sidebarRow__title">Upload Video</h2>
+                                </div>
+                                </a>
+                        {%else%}
+                        <a style="text-decoration:none" class="link" href="/inno_user/up_video/">
+                        <div class="sidebarRow undefined">
+                            <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"></path>
+                            </svg>
+                            <h2 class="sidebarRow__title">Upload Video</h2>
+                        </div>
+                        </a>
+                        {%endif%}
+                            <hr>
+                            <a class="link" style="text-decoration:none" href="/inno_user/likedvideo/">
+                                <div class="sidebarRow undefined">
+                                    <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 17.27l5.17 3.12c.38.23.85-.11.75-.54l-1.37-5.88 4.56-3.95c.33-.29.16-.84-.29-.88l-6.01-.51-2.35-5.54c-.17-.41-.75-.41-.92 0L9.19 8.63l-6.01.51c-.44.04-.62.59-.28.88l4.56 3.95-1.37 5.88c-.1.43.37.77.75.54L12 17.27z"></path>
+                                    </svg>
+                                    <h2 class="sidebarRow__title">Liked videos</h2>
+                                </div>
+                            </a>
+                            <hr>
+                            {% if request.user.username == "guest_user" %}
+                            <a style="text-decoration:none" class="link" href="/inno_user/">
+                                <div class="sidebarRow undefined">
+                                    <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+                                    </svg>
+                                     <h2 class="sidebarRow__title">LogIn</h2>
+                                </div>
+                            </a>
+                            {% else %}
+                            <a style="text-decoration:none" class="link" href="/inno_user/signout/">
+
+
+                            <div class="sidebarRow undefined">
+                                <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+                                </svg>
+                                <h2 class="sidebarRow__title">Logout</h2>
+                            </div>
+                            </a>
+                        {% endif %}
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <script src="/static/js/bundle.js"></script>
+      <script src="/static/js/vendors~main.chunk.js"></script>
+      <script src="/static/js/main.chunk.js"></script>
+      <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" 
+    crossorigin="anonymous"></script>
+
+    </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        innovatobox
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    
+    <style type="text/css">
+        .position
+        {
+            font: 1em sans-serif;
+            position: absolute;
+            right: 10px;
+            top:10px;
+        }
+        #u{
+            position: absolute;
+            margin: 5px;
+            font-weight: bolder;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        .fa:hover {
+            color: darkblue;
+          }
+        
+    </style>
+</head>
+<body style="background-color: rgb(159, 178, 197);">
+
+    {% if user.is_authenticated %}
+    {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }} alert-dismissible fade show w-25 float-left" role="alert">
+        <strong>MESSAGE :</strong> {{request.user}} : {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+	{% endfor %}
+    <span id="u">WELCOME TO INNOVATO, : {{ request.user }}</span>
+    <a href="/inno_user/up_video/" class="btn btn-info mt-2" style=" position:absolute; right:8%; " >UPLOAD CREATION</a>
+    <br>
+
+    <div class="position">
+        <a href="/inno_user/signout/" class='btn btn-outline-danger ml-2 '  type="button">LOGOUT</a>
+    </div>
+
+
+    {% for i in video %}
+    <br>
+     <div class="card mb-5 mx-auto shadow" style="width: 40%;">
+        <h5> UploadBy : {{ i.v_user }}</h5>
+        <video class="embed-responsive embed-responsive-16by9" style="height: 60vh;;" controls="controls">
+            <source src="{{ i.v_file.url }}" type="video/mp4" />
+        </video>
+        <div class="card-body" style= "background-color: rgb(197, 218, 240);">
+          <h5 class="card-title">{{ i.v_title }}</h5>
+          <p class="card-text">{{ i.v_desc }}.</p>
+          <!-- like code ----------------------------------------------->
+                <p>{{ likes }}: likes</p>
+                <form method="POST" action="/inno_user/like_l/">
+                    {% csrf_token %}
+                <input type="hidden" name="l_user" value="{{ request.user }}">
+                <input type="hidden" name="l_postid" value="{{ i.v_id }}">
+                <div>
+                <div>
+
+                   
+                    
+                    {% if request.user.username  in like %}
+                            
+                        <a href="/inno_user/unlike/{{request.user.username}}/" class="btn btn-basic"> 
+
+                            <i class="fas fa-thumbs-down"></i>
+                        </a>
+                    
+                    {% else %}
+
+
+                        <button type="submit" class="btn btn-basic">
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>
+                        
+                    {% endif %}
+                    
+                </div>
+                </form>
+            
+                
+          
+          
+          
+          <!-- ------------------------------------------------------ -->
+          <div class="float-right" style="position: relative; bottom: 50px;;" > 
+                <!-- Button trigger modal -->      
+                <form action="/inno_user/cmt_upld/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="c_user" value="{{ request.user }}" >
+                    <input type="hidden" name="c_postid" value="{{ i.v_id }}" >
+                    <div class = "row" style=" position:relative;top: 5px;"> 
+                        <div class="form-group col-md-8">
+                            <textarea class="form-control" name="comment" placeholder="Comment" rows="1" cols="35" default="NULL"required></textarea>
+                        </div>
+                        <div class=" form-group col-md-4">
+                            <button type="submit" class="btn btn-primary" >Send</button>
+                        </div>
+                       
+                    </div>
+                </form> 
+        
+        </div>                 
+            </div>
+            <h3 style = "margin-top:6%">Comments:</h3>              
+            {% for j in cmt %}
+                {% if i.v_id == j.cmt_vid %}
+                    <p class="ml-4"><span><b>{{ j.cmt_user }} :</b></span>{{ j.cmt_msg }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %} 
+        
+    {% else %}
+   
+	<div class="alert alert-danger alert-dismissible fade show w-25 float-left" role="alert">
+	  <strong>MESSAGE :</strong>SORRY!!! YOU ARE NOT LOGED IN
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+    {% endif %}
+</body>
+<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+<script>
+    function add()
+    {
+        
+        document.getElementById("in").stepUp(1); 
+    }
+    
+        function myfunction(x) {
+          x.classList.toggle("fa-thumbs-down")
+        }
+    
+</script>
+</html>

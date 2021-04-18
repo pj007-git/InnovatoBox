@@ -1,0 +1,172 @@
+<!doctyoe html>
+
+<html>
+	{% load static %}
+  <head>
+    <title>login</title>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+	<style type="text/css">
+	
+	.login-box
+	{
+	height:70%;width:30%; border-radius:10px;position:relative;	left:33%; ;
+
+	}
+	.header
+	{height:20%;width:100%;   border-radius:10px 10px 0px 0px;
+		background:#fcde67; 
+	background-size:620px 300px;
+	}
+	h2	
+	{font-size:2.5em;color:rgb(6, 175, 218); font-family:cursive;
+	position:relative;top:30px;}
+	.container{
+			position: relative;
+			top: 0px;
+			height: 80%;
+			width: 100%;
+			background:#fff677;
+			 height:92% ;width:98%;border-style:groove;
+			border-color: #349ADB;
+			 
+		}
+		.smtbtn{
+			height: 40px;
+			width: 80%;
+			margin-left: 10%;
+			margin-top:5%;
+			background-color:#069fdb;								
+			color: #fff;
+			border: none;
+			font-size:20px;	
+			border-radius:50px;
+		}
+		.input{
+			height:38px;
+			width: 80%;
+			overflow:hidden;
+			padding-left:48px;
+			margin-bottom:4%;
+			margin-left: 10%;
+			background-color:rgba(0,0,0,0);
+			outline:none;
+			border: none;
+			border-bottom: 1px solid #0070f7;
+			
+			
+		}
+	
+		
+		.i1{  margin-top:2%;
+		
+	       margin-left:10%;
+		   
+		}
+		.i3{
+			text-decoration:none;color:black;
+			
+			
+		}
+		
+		.i4{
+		height:40px;
+		width:40px;
+		position:absolute;
+		margin-top:2%;
+		margin-left:30%;
+		}
+		.i5{
+		height:40px;
+		width:40px;
+		position:absolute;	
+		margin-top:2%;
+		margin-left:45%;
+	
+		}
+		.i6{
+		height:40px;
+		width:40px;
+		position:absolute;	
+		margin-top:2%;
+		margin-left:60%;
+		
+		}
+		.i7{
+		margin-left:40%;
+		}
+		.i8{margin-left:20%;margin-top:5%;}
+		
+		
+		body{
+			background-color: #fcde67;
+			background-size:100% 100%;
+		}
+		.i9{	
+		margin-left:2%; text-decoration:none;}
+		.i9:hover{color:red;border-bottom: 1px sol	}
+		::placeholder{
+			font-weight:500;
+			font-family: cursive;
+			color: rgb(40, 185, 137);
+			}
+			
+		
+	</style>
+  </head>
+  <body>
+	{% for msg in messages %}
+	<div class="alert alert-{{ msg.tags }} alert-dismissible fade show w-25 float-left" role="alert">
+	  <strong>MESSAGE :</strong> {{ msg }}
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endfor %}
+  <br><br><br><br><br>
+      <div class="login-box"> 
+	  
+	  <div class="header">
+	    <center> <h2 class="" >InnovatoBox  </h2> </center>
+	  </div>
+	   <div class="container"><br><br><br>
+	   
+	   <form action="/inno_user/login/" method ="post">
+		{% csrf_token %}
+		<div class="form-group col-md-12 col-12">
+	   <input type="text" name="uname" placeholder="Username" class="form-control m-3 mx-5 " required style="background-color:#fff677;  width:80%; font-size:15px; text-align: center; font-style: oblique ; outline:none; border:none;box-shadow: none;border-bottom: 1px solid rgb(6, 175, 218);"autocomplete="off">
+	   </div>
+	   <div class="form-group col-md-12 col-12">
+    	<input type="password" name="password" placeholder="Password" class="form-control m-3 mx-5 " required style="background-color:#fff677;  width:80%; font-size:15px; text-align: center; font-style: oblique ; outline:none; border:none;border-bottom: 1px solid rgb(6, 175, 218);box-shadow: none;" id="ix" autocomplete="off">
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6 col-12 text-center">
+				<a href ="/inno_user/reset_password/" class="i3">Forgot Password?</a>
+			</div>
+			<div class="col-md-6 col-12 text-center">
+				<input type="checkbox" onclick="myFunction()"class="i10"> Show Password
+			</div>
+		</div>
+		<br>
+		<input type="submit" name="" value ="Login"class="smtbtn">
+	    </form>
+		
+	    <p class="i8">Don't have an account?<a href="/inno_user/" class="i9">Sign up</a></p>
+	   </div>
+	 </div>
+	 
+  </body>
+  <script>
+		function myFunction() {
+  			var x = document.getElementById("ix");
+  			if (x.type === "password") {
+			x.type = "text";
+  			}
+			else{
+				x.type = "password";
+				}}
+   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+</html>
+
