@@ -1,6 +1,7 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import date
 # Create your models here.
 
 class Video_up(models.Model):
@@ -11,6 +12,7 @@ class Video_up(models.Model):
     v_gif = models.ImageField(upload_to= 'inno_user/Gif/')
     v_desc = models.CharField(max_length=120, default='')
     v_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default = date.today())
 
     def __str__(self):
         return self.v_title
@@ -67,3 +69,10 @@ class Portfo(models.Model):
     def __str__(self):
         return self.port_user
 
+class follower(models.Model):
+    f_id = models.AutoField(primary_key=True)
+    f_user = models.CharField(max_length=20,default='')
+    sub_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.f_user

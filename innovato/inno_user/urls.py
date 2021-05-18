@@ -27,7 +27,8 @@ urlpatterns = [
     path('welcomepage/',views.welcome,name="welcome"),
     path('guest/' ,views.guest,name="guest"),
     path('subscription/' ,views.follow,name="follow"),
-    path('following/<pid>/<uid>/' ,views.following,name="following"),
+    path('following/<int:pid>/' ,views.following,name="following"),
+    path('unfollowing/<int:pid>/' ,views.unfollowing,name="unfollowing"),
 
     path('reset_password/', 
 		auth_views.PasswordResetView.as_view(template_name='inno_user/password_reset.html'),

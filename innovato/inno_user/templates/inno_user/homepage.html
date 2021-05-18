@@ -110,22 +110,28 @@
                                     <a href="/inno_user/dashbord/{{i.v_id}}/">
                                         <img  src="{{ i.v_gif.url }}" id="gif" >
                                     <img class="videoCard__thumbnail" src= "{{ i.v_image.url }}" alt="{{i.v_title}}" id="static" >
-
+                                    
+                                    </a>
                                     <div class="videoCard__info" id="title">
+                    
                                         <div class="MuiAvatar-root MuiAvatar-circle VideoCard__avatar">
-                                            {% for p in p %}
-                                            {% if i.v_user.username == p.p_name %}
-                                            <a href="/inno_user/profilepage/{{p.p_id}}/">
-                                            <img alt=""
-                                            src="{{ p.p_image.url}}" class="MuiAvatar-img">
-                                            </a>
-                                            {% endif %}
+                                           
+                                            {% for p in p %}                                            
+                                                {% if i.v_user.username == p.p_name %}
+                                                    
+                                                    <a href="/inno_user/profilepage/{{p.p_id}}/">
+                                                        <img alt=""
+                                                        src="{{ p.p_image.url}}" class="MuiAvatar-img">
+                                                    </a>
+                                                 
+                                                {% endif %}
                                             {% endfor %}
                                             
                                         </div>
                                         <div class="videoCard__text">
                                             <div class="lbut" style="text-decoration: none;">
                                                     <h5 >{{i.v_title}}</h5>
+                                                    <p>{{i.date}}</p>
                                                     <p>{{i.v_user }}</p>
                                                     {% for key, value in dic1.items %}
                                                         {% if key == i.v_id %}
@@ -212,6 +218,7 @@
                                     <h2 class="sidebarRow__title">Liked videos</h2>
                                 </div>
                             </a>
+                            {% if request.user.username != "guest_user" %}
                             <hr>
                             <a style="text-decoration:none" class="link" href="/inno_user/subscription/">
                                 <div class="sidebarRow undefined">
@@ -221,6 +228,7 @@
                                     <h2 class="sidebarRow__title">Subscription</h2>
                                 </div>
                             </a>
+                            {% endif %}
                             <hr>
                                     {% if request.user.username == "guest_user" %}
                                     <a style="text-decoration:none" class="link" href="/inno_user/">

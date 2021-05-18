@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Video_up,Comment,like,profile,Skill,Portfo
+from .models import Video_up,Comment,like,profile,Skill,Portfo,follower
 import operator
 # Create your views here.
 def index(request):
@@ -160,6 +160,7 @@ def up_video(request):
         v_desc = request.POST.get('desc', '')
         v_image = request.FILES['image']
         v_gif = request.FILES['gif']
+    
 
         v_post = Video_up(v_title=v_title, v_file=v_video, v_desc=v_desc,v_user=request.user,v_image=v_image,v_gif = v_gif)
         v_post.save()
@@ -209,6 +210,7 @@ def homepage(request):
     v = Video_up.objects.all()
     l = like.objects.all()
     pr = profile.objects.all()
+    
     # total likes logic
     dic1 = dict()
     for i in l:
@@ -216,7 +218,7 @@ def homepage(request):
 
     lr = v[::-1]
     
-    return render(request,"inno_user/homepage.html", { 'video' : lr,'dic1' : dic1, 'p' : pr })
+    return render(request,"inno_user/homepage.html", { 'video' : lr,'dic1' : dic1, 'p' : pr, })
     
 def searchpage(request):
     pr = profile.objects.all()
@@ -240,14 +242,20 @@ def searchpage(request):
     # return render(request,"inno_user/searchpage.html",{'li' : list1 })
 
 
-def profilepage(request, pid):
+def profilepage(request, pid,):
+    l = []
     pr = profile.objects.filter(p_id=pid)
     s = Skill.objects.filter(sk_user=pr[0].p_name)
     port = Portfo.objects.all()
-
+    f = follower.objects.filter(f_user=pr[0].p_name)
+    for j in f:
+        l.append(j.sub_user.username)
+    fo = len(f)
+    
+     
     # port = Portfo.objects.filter(port_user=pr[0].p_name)
     # print(S[0])
-    return render(request,"inno_user/profilepage.html", {'p':pr[0], 's' : s[0],'port' : port})
+    return render(request,"inno_user/profilepage.html", {'p':pr[0], 's' : s[0],'port' : port,'f' : fo,'fo':l })
 
 def up_profile(request, pid):
     pr = profile.objects.all()
@@ -367,9 +375,30 @@ def guest(request):
         return render(request,"inno_user/welcomepage.html")
 
 def follow(request):
-    return render(request,"inno_user/subscription.html")
-def following(request,pid,uid):
+    f = follower.objects.all()
+    p = profile.objects.all()
+    try:
+        return render(request,"inno_user/subscription.html",{'f': f,'p' : p})
+    except:
+        return render(request,"inno_user/subscription.html",{'f': f,'msg' : "You Are not Following Any of the Members Yet!!"})
+
+def following(request,pid):
     p = profile.objects.filter(p_id = pid)
-    u = User.objects.filter(username = uid)
-    fo = ()
+    # u = User.objects.filter(username = uid)
+    # print(type(pid))
+    # print(type(uid))
+    # print(p[0])
+    fo = follower(f_user=p[0].p_name, sub_user=request.user)
+    fo.save()
+    messages.success(request,f"you are Now Following {p[0].p_name}")
+    return redirect(f"/inno_user/profilepage/{pid}")
+
+def unfollowing(request,pid):
+    p = profile.objects.filter(p_id = pid)
+    unfo = follower.objects.filter(f_user = p[0].p_name)
+    for i in unfo:
+        if i.sub_user == request.user:
+            un = follower.objects.filter(f_id = i.f_id)
+            un.delete()
+    messages.success(request,f"you are Unfollowing {p[0].p_name}")
     return redirect(f"/inno_user/profilepage/{pid}")
