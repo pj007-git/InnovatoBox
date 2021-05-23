@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{% static 'inno_user/css/sidebar.css'%}">
         <link rel="stylesheet" href="{% static 'inno_user/css/header.css'%}">   
         <link rel="stylesheet" href="{% static 'inno_user/css/home.css'%}"> 
-        <link rel="stylesheet" href="{% static 'inno_user/css/home3.css'%}">
+        <link rel="stylesheet" href="{% static 'inno_user/css/home2.css'%}">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -110,10 +110,8 @@
                                     <a href="/inno_user/dashbord/{{i.v_id}}/">
                                         <img  src="{{ i.v_gif.url }}" id="gif" >
                                     <img class="videoCard__thumbnail" src= "{{ i.v_image.url }}" alt="{{i.v_title}}" id="static" >
-                                    
                                     </a>
                                     <div class="videoCard__info" id="title">
-                    
                                         <div class="MuiAvatar-root MuiAvatar-circle VideoCard__avatar">
                                            
                                             {% for p in p %}                                            
@@ -131,8 +129,8 @@
                                         <div class="videoCard__text">
                                             <div class="lbut" style="text-decoration: none;">
                                                     <h5 >{{i.v_title}}</h5>
-                                                    <p>{{i.date}}</p>
                                                     <p>{{i.v_user }}</p>
+                                                    <p>{{i.date}}</p>
                                                     {% for key, value in dic1.items %}
                                                         {% if key == i.v_id %}
                                                         {% endif %}
@@ -220,6 +218,7 @@
                             </a>
                             {% if request.user.username != "guest_user" %}
                             <hr>
+
                             <a style="text-decoration:none" class="link" href="/inno_user/subscription/">
                                 <div class="sidebarRow undefined">
                                     <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
@@ -230,6 +229,7 @@
                             </a>
                             {% endif %}
                             <hr>
+                            
                                     {% if request.user.username == "guest_user" %}
                                     <a style="text-decoration:none" class="link" href="/inno_user/">
                                         <div class="sidebarRow undefined">

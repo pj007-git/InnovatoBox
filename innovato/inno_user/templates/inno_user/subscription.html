@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="{% static 'inno_user/css/sidebar.css'%}">
         <link rel="stylesheet" href="{% static 'inno_user/css/header.css'%}">
         <link rel="stylesheet" href="{% static 'inno_user/css/home.css'%}">
-
+        <link rel="stylesheet" href="{% static 'inno_user/css/home2.css'%}">
 <style>
     .sub{
     display: flex;
@@ -23,7 +23,7 @@
     justify-content: center;
     }
        
-    }
+    
 </style>
 </head>
 <body data-new-gr-c-s-check-loaded="14.998.0" data-gr-ext-installed="">
@@ -72,14 +72,14 @@
                     </div>
                 </div>
         <div class="home__page">
-            <div class="UploadPage" style="border-style: solid;
+            <div class="recommendedVideos" style="border-style: solid;
               border-color: #349adb; height: 100vh;overflow-x:scroll;border-radius: 5px;
               border-width: 3px;">
                 <br> 
                     <h2>Subscription:</h2>
                 <br>
                 <h2 class = "text-muted">{{ msg }}</h2>
-               
+                <div class="recommendedVideos__videos">
                 {% for f in f%}
                     {% if request.user == f.sub_user %}
                         {% for p in p %}
@@ -89,11 +89,11 @@
                             <a href="/inno_user/profilepage/{{p.p_id}}/">
                                 <img alt=""
                                 src="{{ p.p_image.url}}" class="rounded  d-block ml-3 " height="200" width="200">
-                                
                             </a>
-                            <p>{{f.f_user}}</p>
+                            <h4 style="margin-left: 38px;">{{f.f_user}}</h4>
                             </div>
                         </div>
+
                     
                     
                         {%endif%}
@@ -101,13 +101,13 @@
                     {%endif%}
                 {% endfor %} 
             </div>
-         
+            </div>
     {% else %}
 	<div class="alert alert-danger alert-dismissible fade show w-25 float-left" role="alert">
         <strong>MESSAGE :</strong>SORRY!!! YOU ARE NOT LOGED IN
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-  
+
       {% endif %}
       <div class="sidebar">
           <a class="link" style="text-decoration:none" href="/inno_user/homepage/">
@@ -180,7 +180,18 @@
                   <h2 class="sidebarRow__title">Liked videos</h2>
               </div>
           </a>
-        
+          {% if request.user.username != "guest_user" %}
+          <hr>
+
+          <a style="text-decoration:none" class="link" href="/inno_user/subscription/">
+              <div class="sidebarRow undefined">
+                  <svg class="MuiSvgIcon-root sidebarRow__icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 17.27l5.17 3.12c.38.23.85-.11.75-.54l-1.37-5.88 4.56-3.95c.33-.29.16-.84-.29-.88l-6.01-.51-2.35-5.54c-.17-.41-.75-.41-.92 0L9.19 8.63l-6.01.51c-.44.04-.62.59-.28.88l4.56 3.95-1.37 5.88c-.1.43.37.77.75.54L12 17.27z"></path>
+                  </svg>
+                  <h2 class="sidebarRow__title">Subscription</h2>
+              </div>
+          </a>
+          {% endif %}
           
           <hr>
           {% if request.user.username == "guest_user" %}

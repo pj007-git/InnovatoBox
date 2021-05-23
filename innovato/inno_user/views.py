@@ -160,7 +160,6 @@ def up_video(request):
         v_desc = request.POST.get('desc', '')
         v_image = request.FILES['image']
         v_gif = request.FILES['gif']
-    
 
         v_post = Video_up(v_title=v_title, v_file=v_video, v_desc=v_desc,v_user=request.user,v_image=v_image,v_gif = v_gif)
         v_post.save()
